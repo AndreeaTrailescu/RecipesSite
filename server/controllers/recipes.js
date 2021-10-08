@@ -13,7 +13,7 @@ export const getRecipes = async (req, res) => {
 export const createRecipe = async (req, res) => {
     const recipe = req.body;
 
-    const newRecipe = newRecipeDescription(recipe);
+    const newRecipe = new RecipeDescription(recipe);
     
     try {
         await newRecipe.save();
