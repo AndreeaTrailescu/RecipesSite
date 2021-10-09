@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    margin: '30px',
+    margin: '20px',
   },
   fileInput: {
     width: '97%',
@@ -28,7 +28,7 @@ export default makeStyles((theme) => ({
     fontFamily: ['curves',].join(','),
   },
   buttonSubmit: {
-    background: 'linear-gradient(45deg, #e56210 20%, #391804 90%)',
+    background: 'linear-gradient(0deg, #788402 20%, #391804 100%)',
     border: 0,
     borderRadius: 6,
     boxShadow: '0 3px 5px 3px rgba(91, 39, 6, 1)',
@@ -39,5 +39,15 @@ export default makeStyles((theme) => ({
   write: {
     fontWeight: 400,
     fontFamily: ['curves',].join(','),
+  },
+  clearButton: {
+    background: 'linear-gradient(0deg, #788402 20%, #391804 100%)',
+    border: 0,
+    borderRadius: 6,
+    boxShadow: '0 3px 5px 3px rgba(91, 39, 6, 1)',
+    color: 'white',
+    height: 30,
+    padding: '0 30px',
+    margin: '10px 0px',
   },
 }));

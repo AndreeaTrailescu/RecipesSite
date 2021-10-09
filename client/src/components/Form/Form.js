@@ -1,29 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
-import { createRecipe } from '../../actions/recipes';
+import { createRecipe, updateRecipe } from '../../actions/recipes';
 
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
     const [recipeData, setRecipeData] = useState({
-        creator: '', title:'', description:'', tags:'', photo:''
+        creator: '', title:'', description:'', tags:'', selectedFile:''
     })
     const classes = useStyles();
     const dispatch = useDispatch();
+    const recipe =  useSelector((state) => currentId ? state.recipes.find((p) => p._id === currentId) : null);
+
+    useEffect(() => {
+        if(recipe) setRecipeData(recipe);
+    }, [recipe])
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(createRecipe(recipeData));
+        if(currentId) {
+            dispatch(updateRecipe(currentId, recipeData));
+        } else {
+            dispatch(createRecipe(recipeData));
+        }
+        clear();
+    }
+
+    const clear = () => {
+        setCurrentId(null);
+        setRecipeData({
+            creator: '', title:'', description:'', tags:'', selectedFile:''
+        });
     }
 
     return (
         <Paper className={classes.paper} elevation={12}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6" className={classes.write}>Create a Recipe</Typography>
+                <Typography variant="h6" className={classes.write}>{ currentId ? 'Edit' : 'Create' } a Recipe</Typography>
                 <TextField name="creator" variant="filled" label="Creator" fullWidth value={recipeData.creator} onChange={(e) => setRecipeData({ ...recipeData, creator: e.target.value })}/>
                 <TextField name="title" variant="filled" label="Titlu" fullWidth value={recipeData.title} onChange={(e) => setRecipeData({ ...recipeData, title: e.target.value })}/>
                 <TextField name="description" variant="filled" label="Descriere" fullWidth value={recipeData.description} onChange={(e) => setRecipeData({ ...recipeData, description: e.target.value })}/>
@@ -32,6 +49,7 @@ const Form = () => {
                     <FileBase type="file" multiple={false} onDone={({base64}) => setRecipeData({ ...recipeData, selectedFile: base64 })} />
                 </div>
                 <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Add Recipe</Button>
+                <Button className={classes.clearButton} variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>
         </Paper>
     );

@@ -4,7 +4,7 @@ const recipeSchema = mongoose.Schema({
     title: String,
     description: String,
     creator: String,
-    photo: String,
+    selectedFile: String,
     tags: [String],
     likeCount: {
         type: Number,
