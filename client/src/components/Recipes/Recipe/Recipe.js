@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { deleteRecipe } from '../../../actions/recipes';
+import { deleteRecipe, likeRecipe } from '../../../actions/recipes';
 
 const Recipe = ({ recipe, setCurrentId }) => {
     const classes = useStyles();
@@ -33,7 +33,8 @@ const Recipe = ({ recipe, setCurrentId }) => {
             <Typography variant="h5" gutterBottom>{recipe.description}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-                <Button size="small" color="primary" onClick={() => {}}>
+                <Button size="small" color="primary" 
+                onClick={() => dispatch(likeRecipe(recipe._id))}>
                     <FavoriteIcon fontSize="small" style={{ fill: "#ff0066" }} />
                     {recipe.likeCount}
                 </Button>

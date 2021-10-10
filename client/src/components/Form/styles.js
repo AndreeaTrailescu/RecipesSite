@@ -41,7 +41,7 @@ export default makeStyles((theme) => ({
     fontFamily: ['curves',].join(','),
   },
   clearButton: {
-    background: 'linear-gradient(0deg, #788402 20%, #391804 100%)',
+    background: 'linear-gradient(0deg, #391804 10%, #788402 90%)',
     border: 0,
     borderRadius: 6,
     boxShadow: '0 3px 5px 3px rgba(91, 39, 6, 1)',
