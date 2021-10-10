@@ -23,7 +23,7 @@ export default makeStyles({
   },
   overlay2: {
     position: 'absolute',
-    top: '20px',
+    top: '10px',
     right: '20px',
     color: 'white',
   },
@@ -33,7 +33,7 @@ export default makeStyles({
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px',
+    margin: '10px',
   },
   title: {
     fontFamily: ['curves',].join(','),

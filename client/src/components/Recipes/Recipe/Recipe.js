@@ -30,7 +30,7 @@ const Recipe = ({ recipe, setCurrentId }) => {
                 <Typography variant="body2" color="textSecondary" className={classes.tags}>{recipe.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
             <CardContent>
-            <Typography variant="h5" gutterBottom>{recipe.description}</Typography>
+            <Typography variant="body2" color="textPrimary" component="p">{recipe.description}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary" 

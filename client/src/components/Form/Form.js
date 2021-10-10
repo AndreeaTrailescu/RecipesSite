@@ -44,7 +44,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <TextField name="creator" variant="filled" label="Creator" fullWidth value={recipeData.creator} onChange={(e) => setRecipeData({ ...recipeData, creator: e.target.value })}/>
                 <TextField name="title" variant="filled" label="Titlu" fullWidth value={recipeData.title} onChange={(e) => setRecipeData({ ...recipeData, title: e.target.value })}/>
                 <TextField name="description" variant="filled" label="Descriere" fullWidth value={recipeData.description} onChange={(e) => setRecipeData({ ...recipeData, description: e.target.value })}/>
-                <TextField name="tags" variant="filled" label="Tags" fullWidth value={recipeData.tags} onChange={(e) => setRecipeData({ ...recipeData, tags: e.target.value })}/>
+                <TextField name="tags" variant="filled" label="Tags" fullWidth value={recipeData.tags} onChange={(e) => setRecipeData({ ...recipeData, tags: e.target.value.split(',') })}/>
                 <div className={classes.fileInput}>
                     <FileBase type="file" multiple={false} onDone={({base64}) => setRecipeData({ ...recipeData, selectedFile: base64 })} />
                 </div>
