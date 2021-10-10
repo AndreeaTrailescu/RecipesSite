@@ -30,8 +30,17 @@ export const updateRecipe = async (req, res) => {
     const recipe = req.body;
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No recipe with this id');
-
-    const updatedRecipe = await RecipeDescription.findByIdAndUpdate(_id, recipe, { new: true });
+    const updatedRecipe = await RecipeDescription.findByIdAndUpdate(_id, { ...recipe, _id }, { new: true });
 
     res.json(updatedRecipe);
+}
+
+export const deleteRecipe = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No recipe with this id');
+
+    await RecipeDescription.findByIdAndRemove(id);
+
+    res.json({ message: 'Recipe deleted successfully' });
 }
