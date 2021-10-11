@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import RecipeDescription from '../models/recipeDescription.js';
 
 export const getRecipes = async (req, res) => {
@@ -22,4 +23,35 @@ export const createRecipe = async (req, res) => {
     } catch (error) {
         res.save(409).json({ message: error.message });
     }
+}
+
+export const updateRecipe = async (req, res) => {
+    const { id: _id } = req.params;
+    const recipe = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No recipe with this id');
+    const updatedRecipe = await RecipeDescription.findByIdAndUpdate(_id, { ...recipe, _id }, { new: true });
+
+    res.json(updatedRecipe);
+}
+
+export const deleteRecipe = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No recipe with this id');
+
+    await RecipeDescription.findByIdAndRemove(id);
+
+    res.json({ message: 'Recipe deleted successfully' });
+}
+
+export const likeRecipe = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No recipe with this id');
+
+    const recipe = await RecipeDescription.findById(id);
+    const updatedRecipe = await RecipeDescription.findByIdAndUpdate(id, { likeCount: recipe.likeCount + 1 }, { new: true } )
+
+    res.json(updateRecipe);
 }
