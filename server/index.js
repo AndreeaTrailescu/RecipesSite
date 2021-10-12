@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import postRoutes from './routes/recipes.js';
+import userRoutes from './routes/users.js';
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,8 @@ app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 
 app.use('/recipes', postRoutes);
+app.use('/user', userRoutes);
+
 const CONNECTION_URL = 'mongodb+srv://project:project@cluster0.fkfhi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;
 
