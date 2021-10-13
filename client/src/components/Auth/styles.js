@@ -1,7 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-
 export default makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: theme.spacing(2),
+    background: '#F7F4EF',
+  },
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
@@ -12,42 +19,35 @@ export default makeStyles((theme) => ({
       fontWeight: 100,
     },
   },
-  paper: {
-    padding: theme.spacing(3),
-    background: '#F7F4EF',
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: 'black',
   },
   form: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    margin: '20px',
+    width: '100%',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
   },
-  fileInput: {
-    width: '97%',
-    margin: '10px 0',
-    fontFamily: ['curves',].join(','),
-  },
-  buttonSubmit: {
+  submit: {
+    margin: theme.spacing(3, 0, 2),
     background: 'linear-gradient(0deg, #f1dabf 70%, #92817a 120%)',
     border: 0,
     borderRadius: 6,
     boxShadow: '1px 1px 2px 2px #04030f',
     color: '#04030f',
-    height: 48,
-    padding: '0 30px',
   },
-  write: {
-    fontWeight: 400,
-    fontFamily: ['curves',].join(','),
-  },
-  clearButton: {
+  googleButton: {
+    marginBottom: theme.spacing(2),
     background: 'linear-gradient(0deg, #f1dabf 5%, #92817a 140%)',
     border: 0,
     borderRadius: 6,
     boxShadow: '0px 1px 2px 2px #04030f',
     color: '#04030f',
-    height: 30,
-    padding: '0 30px',
-    margin: '10px 0px',
+  },
+  title: {
+    fontFamily: ['curves',].join(','),
+  },
+  anotherButton: {
+    fontFamily: ['curves',].join(','),
   },
 }));

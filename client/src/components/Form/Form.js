@@ -9,11 +9,12 @@ import { createRecipe, updateRecipe } from '../../actions/recipes';
 
 const Form = ({ currentId, setCurrentId }) => {
     const [recipeData, setRecipeData] = useState({
-        creator: '', title:'', description:'', tags:'', selectedFile:''
+        title:'', description:'', tags:'', selectedFile:''
     })
     const classes = useStyles();
     const dispatch = useDispatch();
     const recipe =  useSelector((state) => currentId ? state.recipes.find((p) => p._id === currentId) : null);
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         if(recipe) setRecipeData(recipe);
@@ -23,9 +24,9 @@ const Form = ({ currentId, setCurrentId }) => {
         e.preventDefault();
 
         if(currentId) {
-            dispatch(updateRecipe(currentId, recipeData));
+            dispatch(updateRecipe(currentId, { ...recipeData, name: user?.result?.name }));
         } else {
-            dispatch(createRecipe(recipeData));
+            dispatch(createRecipe({ ...recipeData, name: user?.result?.name }));
         }
         clear();
     }
@@ -33,17 +34,24 @@ const Form = ({ currentId, setCurrentId }) => {
     const clear = () => {
         setCurrentId(null);
         setRecipeData({
-            creator: '', title:'', description:'', tags:'', selectedFile:''
+            title:'', description:'', tags:'', selectedFile:''
         });
+    }
+
+    if(!user?.result?.name) {
+        return (
+            <Paper className={classes.paper}>
+                <Typography variant="h6" align="center">Please Sign In to see recipes and to create your own.</Typography>
+            </Paper>
+        )
     }
 
     return (
         <Paper className={classes.paper} elevation={12}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6" className={classes.write}>{ currentId ? 'Edit' : 'Create' } a Recipe</Typography>
-                <TextField name="creator" variant="filled" label="Creator" fullWidth value={recipeData.creator} onChange={(e) => setRecipeData({ ...recipeData, creator: e.target.value })}/>
                 <TextField name="title" variant="filled" label="Titlu" fullWidth value={recipeData.title} onChange={(e) => setRecipeData({ ...recipeData, title: e.target.value })}/>
-                <TextField name="description" variant="filled" label="Descriere" fullWidth value={recipeData.description} onChange={(e) => setRecipeData({ ...recipeData, description: e.target.value })}/>
+                <TextField className={classes.description} name="description" variant="filled" label="Descriere" fullWidth multiline rows={4} value={recipeData.description} onChange={(e) => setRecipeData({ ...recipeData, description: e.target.value })}/>
                 <TextField name="tags" variant="filled" label="Tags" fullWidth value={recipeData.tags} onChange={(e) => setRecipeData({ ...recipeData, tags: e.target.value.split(',') })}/>
                 <div className={classes.fileInput}>
                     <FileBase type="file" multiple={false} onDone={({base64}) => setRecipeData({ ...recipeData, selectedFile: base64 })} />

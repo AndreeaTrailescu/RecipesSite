@@ -1,6 +1,8 @@
 body {
-    background-color: #e56210;
+    background-color: #92817a;
     background-image: url("C:\Users\ANDREEA\Desktop\RecipesSite\client\src\images\background.png");
-    background-size: 1300px 1000px;
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
 }
