@@ -61,13 +61,13 @@ const Auth = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Paper className={classes.paper} elevation={3}>
+            <Paper className={classes.paper} elevation={12}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+                    <LockOutlinedIcon  style={{ fill: "white" }} />
                 </Avatar>
-                <Typography variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
+                <Typography className={classes.title} variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
+                    <Grid className={`${classes.root} ${classes.form}`} container spacing={2}>
                         {
                             isSignUp && (
                                 <>
@@ -86,7 +86,7 @@ const Auth = () => {
                     <GoogleLogin
                         clientId="712392538000-tfamt7d2hu1glrrl7gmdruidm0kfl32u.apps.googleusercontent.com"
                         render={(renderProps) => (
-                            <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon  />} variant="contained">Google Sign In</Button>
+                            <Button className={classes.googleButton} fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon  />} variant="contained">Google Sign In</Button>
                         )}
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
@@ -95,7 +95,7 @@ const Auth = () => {
                     
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Button onClick={switchMode}>
+                            <Button className={classes.anotherButton} onClick={switchMode}>
                                 { isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up" }
                             </Button>
                         </Grid>

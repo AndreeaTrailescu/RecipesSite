@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
     appBar: {
@@ -12,13 +11,14 @@ export default makeStyles((theme) => ({
         background: '#F7F4EF',
     },
     heading: {
-        color: 'rgba(0, 0, 0, 1)',
+        color: '#04030f',
         fontFamily: ['curves',].join(','),
         fontWeight: 100,
-        padding: '10px 2px 10px 30px',
+        padding: '10px 0px 10px 30px',
+        textDecoration: 'none',
     },
     image: {
-        marginLeft: '15px',
+        marginLeft: '10px',
         marginBottom: '10px',
         marginTop: '10px',
     },
@@ -35,18 +35,40 @@ export default makeStyles((theme) => ({
   profile: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '400px',
+    width: '700px',
+    padding: '10px -200px 0 200px',
   },
   userName: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'right',
+    color: '#04030f',
+    fontFamily: ['curves',].join(','),
+    marginRight: '-100px',
   },
   brandContainer: {
     display: 'flex',
     alignItems: 'center',
   },
   purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    color: '#F7F4EF',
+    backgroundColor: '#04030f' ,
+    marginRight: '-160px',
+    marginLeft: '200px',
   },
+  logout: {
+    marginRight: '-200px',
+    background: 'linear-gradient(0deg, #f1dabf 70%, #92817a 120%)',
+    border: 0,
+    borderRadius: 6,
+    boxShadow: '1px 1px 2px 2px #04030f',
+    color: '#04030f',
+  },
+  signInButton: {
+    marginRight: '-200px',
+    background: 'linear-gradient(0deg, #f1dabf 70%, #92817a 120%)',
+    border: 0,
+    borderRadius: 6,
+    boxShadow: '1px 1px 2px 2px #04030f',
+    color: '#04030f',
+  }
 }));
