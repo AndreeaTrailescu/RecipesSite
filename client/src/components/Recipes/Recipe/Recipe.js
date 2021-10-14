@@ -27,7 +27,7 @@ const Recipe = ({ recipe, setCurrentId }) => {
     };
 
     return (
-        <Card className={classes.card}>
+        <Card className={classes.card} raised elevation={6}>
             <CardMedia className={classes.media} image={recipe.selectedFile} title={recipe.title}></CardMedia>
             <div>
                 <Typography variant="h6" className={classes.person}>{recipe.name}</Typography>

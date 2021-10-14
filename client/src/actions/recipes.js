@@ -1,11 +1,23 @@
 import * as api from '../api';
 
-export const getRecipes = () => async (dispatch) => {
+export const getRecipes = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchRecipes(); 
+        const { data } = await api.fetchRecipes(page); 
+        
+        
         dispatch ({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
         console.log(error.message);
+    }
+}
+
+export const getRecipeBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        const { data: { data } } = await api.fetchRecipesBySearch(searchQuery);
+        console.log(data);
+        dispatch ({ type: 'FETCH_BY_SEARCH', payload: data });
+    } catch (error) {
+        console.log(error);
     }
 }
 
