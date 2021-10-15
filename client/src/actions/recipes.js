@@ -1,11 +1,26 @@
-import * as api from '../api';
+import * as api from '../api/index.js';
+
+export const getRecipe = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: 'START_LOADING' });
+        const { data } = await api.fetchRecipe(id); 
+        
+        
+        dispatch ({ type: 'FETCH_RECIPE', payload: data });
+        dispatch({ type: 'END_LOADING' });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 export const getRecipes = (page) => async (dispatch) => {
     try {
+        dispatch({ type: 'START_LOADING' });
         const { data } = await api.fetchRecipes(page); 
         
         
         dispatch ({ type: 'FETCH_ALL', payload: data });
+        dispatch({ type: 'END_LOADING' });
     } catch (error) {
         console.log(error.message);
     }
@@ -13,18 +28,23 @@ export const getRecipes = (page) => async (dispatch) => {
 
 export const getRecipeBySearch = (searchQuery) => async (dispatch) => {
     try {
+        dispatch({ type: 'START_LOADING' });
         const { data: { data } } = await api.fetchRecipesBySearch(searchQuery);
         console.log(data);
         dispatch ({ type: 'FETCH_BY_SEARCH', payload: data });
+        dispatch({ type: 'END_LOADING' });
     } catch (error) {
         console.log(error);
     }
 }
 
-export const createRecipe = (recipe) => async (dispatch) => {
+export const createRecipe = (recipe, history) => async (dispatch) => {
     try {
+        dispatch({ type: 'START_LOADING' });
         const { data } = await api.createRecipe(recipe);
+        history.push(`/recipes/${data._id}`);
         dispatch({ type: 'CREATE', payload: data });
+        dispatch({ type: 'END_LOADING' });
     } catch (error) {
         console.log(error.message);
     }

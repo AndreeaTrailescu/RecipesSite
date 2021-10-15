@@ -5,34 +5,36 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
 import { createRecipe, updateRecipe } from '../../actions/recipes';
-
+import { useHistory } from 'react-router-dom';
 
 const Form = ({ currentId, setCurrentId }) => {
     const [recipeData, setRecipeData] = useState({
         title:'', description:'', tags:'', selectedFile:''
     })
     const classes = useStyles();
+    const recipe  =  useSelector((state) => (currentId ? state.recipes.recipes.find((p) => p._id === currentId) : null));
     const dispatch = useDispatch();
-    const recipe =  useSelector((state) => currentId ? state.recipes.find((p) => p._id === currentId) : null);
     const user = JSON.parse(localStorage.getItem('profile'));
+
+    const history = useHistory();
 
     useEffect(() => {
         if(recipe) setRecipeData(recipe);
-    }, [recipe])
+    }, [recipe]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if(currentId) {
             dispatch(updateRecipe(currentId, { ...recipeData, name: user?.result?.name }));
         } else {
-            dispatch(createRecipe({ ...recipeData, name: user?.result?.name }));
+            dispatch(createRecipe({ ...recipeData, name: user?.result?.name }, history));
         }
         clear();
     }
 
     const clear = () => {
-        setCurrentId(null);
+        setCurrentId(0);
         setRecipeData({
             title:'', description:'', tags:'', selectedFile:''
         });

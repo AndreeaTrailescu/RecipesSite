@@ -5,7 +5,7 @@ export const getRecipes = async (req, res) => {
     const { page } = req.query;
 
     try {
-        const LIMIT = 8;
+        const LIMIT = 6;
         const startIndex = (Number(page) - 1) * LIMIT;
         const total = await RecipeDescription.countDocuments({});
 
@@ -85,4 +85,15 @@ export const likeRecipe = async (req, res) => {
     const updatedRecipe = await RecipeDescription.findByIdAndUpdate(id, recipe, { new: true } )
 
     res.json(updateRecipe);
+}
+
+export const getRecipe = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const recipe = await RecipeDescription.findById(id);
+        res.status(200).json(recipe);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }
