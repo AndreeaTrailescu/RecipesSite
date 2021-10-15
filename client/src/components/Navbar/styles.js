@@ -9,6 +9,7 @@ export default makeStyles((theme) => ({
         justifyContent: 'left',
         alignItems: 'center',
         background: '#F7F4EF',
+        
     },
     heading: {
         color: '#04030f',

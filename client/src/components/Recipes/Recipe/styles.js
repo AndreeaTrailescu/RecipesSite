@@ -2,7 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
   media: {
+    height: 0,
     paddingTop: '56.25%',
+  },
+  fullHeightCard: {
+    height: '100%',
   },
   card: {
     display: 'flex',
@@ -27,21 +31,27 @@ export default makeStyles({
     right: '20px',
     color: 'white',
   },
+  overlay: {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+    color: 'white',
+  },
   grid: {
     display: 'flex',
   },
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '10px',
+    margin: '20px',
   },
   title: {
     fontFamily: ['curves',].join(','),
     fontWeight: 100,
-    padding: '0px 10px 0px 10px',
+    padding: '0px 10px 20px 10px',
   },
   cardActions: {
-    padding: '0 30px 8px 16px',
+    padding: '0 16px 8px 16px',
     display: 'flex',
     justifyContent: 'space-between',
   },
@@ -56,5 +66,9 @@ export default makeStyles({
   tags: {
     position: 'absolute',
     left: '10px',
+  },
+  cardAction: {
+    display: 'block',
+    textAlign: 'initial',
   },
 });

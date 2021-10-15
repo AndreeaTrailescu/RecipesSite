@@ -1,18 +1,38 @@
-const reducer = (recipes = [], action) => {
+const reducer = (state = { isLoading: true, recipes: [] }, action) => {
     switch (action.type) {
+        case 'START_LOADING':
+            return { ...state, isLoading: true };
+        case 'END_LOADING':
+            return { ...state, isLoading: false };
+        case 'FETCH_BY_SEARCH':
+            return {
+                ...state,
+                recipes: action.payload
+            };
+        case 'FETCH_RECIPE':
+            return {
+                ...state,
+                recipe: action.payload
+            };
         case 'FETCH_ALL':
-            return action.payload;
+            return {
+                ...state,
+                recipes: action.payload.data,
+                currentPage: action.payload.currentPage,
+                numberOfPages: action.payload.numberOfPages,
+            };
         case 'CREATE':
-            return [...recipes, action.payload];
+            return { ...state, recipes:  [...state.recipes, action.payload]};
         case 'UPDATE':
-            return recipes.map((recipe) => recipe._id === action.payload._id ? action.payload : recipe);
+            return { ...state, recipes:  state.recipes.map((recipe) => (recipe._id === action.payload._id ? action.payload : recipe))};
         case 'DELETE':
-            return recipes.filter((recipe) => recipe._id !== action.payload);
+            return { ...state, recipes:  state.recipes.filter((recipe) => recipe._id !== action.payload)};
         case 'LIKE':
-            return recipes.map((recipe) => recipe._id === action.payload._id ? action.payload : recipe);
+            return { ...state, recipes: state.recipes.map((recipe) => recipe._id === action.payload._id ? action.payload : recipe)};
         default:
-            return recipes;
+            return state;
     }
 } 
+
 
 export default reducer;

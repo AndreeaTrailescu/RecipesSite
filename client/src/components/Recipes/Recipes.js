@@ -7,14 +7,16 @@ import useStyles from './styles';
 
 
 const Recipes = ({ setCurrentId }) => {
-    const recipes = useSelector((state) => state.recipes);
+    const { recipes, isLoading } = useSelector((state) => state.recipes);
     const classes = useStyles();
 
+    if(!recipes.length && !isLoading) return "No recipes";
+
     return (
-        !recipes.length ? <CircularProgress /> : (
+        isLoading ? <CircularProgress /> : (
             <Grid className={classes.container} container alignItems="stretch" spacing={3}>
                 {recipes.map((recipe) => (
-                    <Grid key={recipe._id} item xs={12} sm={6}>
+                    <Grid key={recipe._id} item xs={12} sm={12} md={6} lg={4}>
                         <Recipe recipe={recipe} setCurrentId={setCurrentId} />
                     </Grid>
                 ))}

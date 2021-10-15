@@ -2,10 +2,17 @@ import mongoose from 'mongoose';
 import RecipeDescription from '../models/recipeDescription.js';
 
 export const getRecipes = async (req, res) => {
-    try {
-        const  recipeDescriptions = await RecipeDescription.find();
+    const { page } = req.query;
 
-        res.status(200).json(recipeDescriptions);
+    try {
+        const LIMIT = 6;
+        const startIndex = (Number(page) - 1) * LIMIT;
+        const total = await RecipeDescription.countDocuments({});
+
+        const  recipes = await RecipeDescription.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+
+
+        res.status(200).json({ data: recipes, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -22,6 +29,19 @@ export const createRecipe = async (req, res) => {
 
     } catch (error) {
         res.save(409).json({ message: error.message });
+    }
+}
+
+export const getRecipeBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query
+    
+    try {
+        const title = new RegExp(searchQuery, 'i');
+        const recipes = await RecipeDescription.find({ $or: [ {title}, {tags: { $in: tags.split(',') }} ] });
+        res.json({ data: recipes });
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }
 
@@ -65,4 +85,15 @@ export const likeRecipe = async (req, res) => {
     const updatedRecipe = await RecipeDescription.findByIdAndUpdate(id, recipe, { new: true } )
 
     res.json(updateRecipe);
+}
+
+export const getRecipe = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const recipe = await RecipeDescription.findById(id);
+        res.status(200).json(recipe);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }
