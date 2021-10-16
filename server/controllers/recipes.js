@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import RecipeDescription from '../models/recipeDescription.js';
+import express from 'express';
+
+const router = express.Router();
 
 export const getRecipes = async (req, res) => {
     const { page } = req.query;
@@ -84,7 +87,7 @@ export const likeRecipe = async (req, res) => {
 
     const updatedRecipe = await RecipeDescription.findByIdAndUpdate(id, recipe, { new: true } )
 
-    res.json(updateRecipe);
+    res.json(updatedRecipe);
 }
 
 export const getRecipe = async (req, res) => {
@@ -97,3 +100,18 @@ export const getRecipe = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+export const commentRecipe = async (req, res) => {
+    const { id } = req.params;
+    const { value } = req.body;
+
+    const recipe = await RecipeDescription.findById(id);
+
+    recipe.comments.push(value);
+
+    const updatedRecipe = await RecipeDescription.findByIdAndUpdate(id, recipe, { new: true });
+    res.json(updatedRecipe);
+}
+
+
+export default router;

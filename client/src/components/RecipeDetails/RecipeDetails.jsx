@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { useParams, useHistory } from 'react-router-dom';
 import { getRecipe, getRecipeBySearch } from '../../actions/recipes';
+import CommentSection from './CommentSection';
 
 const RecipeDetails = () => {
     const { recipe, recipes, isLoading } = useSelector((state) => state.recipes);
@@ -48,7 +49,7 @@ const RecipeDetails = () => {
                 <Divider style={{ margin: '20px 0' }} />
                 <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
                 <Divider style={{ margin: '20px 0' }} />
-                <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+                <CommentSection recipe={recipe} />
                 <Divider style={{ margin: '20px 0' }} />
             </div>
             <div className={classes.imageSection}>

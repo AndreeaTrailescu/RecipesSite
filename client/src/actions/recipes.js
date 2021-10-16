@@ -70,11 +70,24 @@ export const deleteRecipe = (id) => async (dispatch) => {
 }
 
 export const likeRecipe = (id) => async (dispatch) => {
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     try {
-        const { data } = await api.likeRecipe(id);
+        const { data } = await api.likeRecipe(id, user?.token);
         dispatch({ type: 'LIKE', payload: data });
         
     } catch (error) {
         console.log(error.message);
+    }
+}
+
+export const commentRecipe = (value, id) => async (dispatch) => {
+    try {
+        const { data } = await api.comment(value, id);
+        dispatch({ type: 'COMMENT', payload: data });
+
+        return data.comments;
+    } catch (error) {
+        console.log(error);
     }
 }

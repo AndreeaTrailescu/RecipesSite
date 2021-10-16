@@ -1,5 +1,5 @@
 import express from 'express';
-import { getRecipeBySearch, getRecipe, getRecipes, createRecipe, updateRecipe, deleteRecipe, likeRecipe } from '../controllers/recipes.js';
+import { getRecipeBySearch, commentRecipe, getRecipe, getRecipes, createRecipe, updateRecipe, deleteRecipe, likeRecipe } from '../controllers/recipes.js';
 import auth from '../middleware/auth.js';
 
 // http://localhost:5000/recipes
@@ -13,5 +13,6 @@ router.patch('/:id', auth, updateRecipe);
 router.delete('/:id', auth, deleteRecipe);
 router.patch('/:id/likeRecipe', auth, likeRecipe);
 router.get('/:id', getRecipe);
+router.post('/:id/commentRecipe', auth, commentRecipe);
 
 export default router;

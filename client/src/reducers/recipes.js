@@ -21,6 +21,16 @@ const reducer = (state = { isLoading: true, recipes: [] }, action) => {
                 currentPage: action.payload.currentPage,
                 numberOfPages: action.payload.numberOfPages,
             };
+        case 'COMMENT':
+            return {
+                ...state,
+                recipes: state.recipes.map((recipe) => {
+                    if(recipe._id === action.payload._id) {
+                        return action.payload;
+                    }
+                    return recipe;
+                }),
+            };
         case 'CREATE':
             return { ...state, recipes:  [...state.recipes, action.payload]};
         case 'UPDATE':
