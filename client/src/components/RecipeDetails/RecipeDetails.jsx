@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { useParams, useHistory } from 'react-router-dom';
 import { getRecipe, getRecipeBySearch } from '../../actions/recipes';
+import CommentSection from './CommentSection';
 
 const RecipeDetails = () => {
     const { recipe, recipes, isLoading } = useSelector((state) => state.recipes);
@@ -37,18 +38,16 @@ const RecipeDetails = () => {
     const openRecipe = (_id) => history.push(`/recipes/${_id}`);
 
     return (
-        <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
+        <Paper style={{ padding: '20px', borderRadius: '15px', background: '#F7F4EF' }} elevation={12}>
         <div className={classes.card}>
             <div className={classes.section}>
-                <Typography variant="h3" component="h2">{recipe.title}</Typography>
-                <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{recipe.tags.map((tag) => `#${tag} `)}</Typography>
-                <Typography gutterBottom variant="body1" component="p">{recipe.description}</Typography>
-                <Typography variant="h6">Created by: {recipe.name}</Typography>
-                <Typography variant="body1">{moment(recipe.dateWascreatedAt).fromNow()}</Typography>
+                <Typography className={classes.section} variant="h3" component="h2">{recipe.title}</Typography>
+                <Typography className={classes.section} gutterBottom variant="h6" color="textSecondary" component="h2">{recipe.tags.map((tag) => `#${tag} `)}</Typography>
+                <Typography className={classes.section} gutterBottom variant="body1" component="p" style={{ fontSize: '30px' }}>{recipe.description}</Typography>
+                <Typography className={classes.section} variant="h6"><strong>Created by:</strong> {recipe.name}</Typography>
+                <Typography className={classes.section} variant="body1">{moment(recipe.dateWascreatedAt).fromNow()}</Typography>
                 <Divider style={{ margin: '20px 0' }} />
-                <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
-                <Divider style={{ margin: '20px 0' }} />
-                <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+                <CommentSection recipe={recipe} />
                 <Divider style={{ margin: '20px 0' }} />
             </div>
             <div className={classes.imageSection}>
@@ -57,16 +56,15 @@ const RecipeDetails = () => {
         </div>
         {recommendedRecipes.length && (
             <div className={classes.section}>
-                <Typography gutterBottom variant="h5">You might also like:</Typography>
-                <Divider  />
+                <Typography className={classes.section} gutterBottom variant="h5">You might also like:</Typography>
                 <div className={classes.recommendedPosts}>
                     {recommendedRecipes.map(({ title, description, name, likes, selectedFile, _id }) => (
                         <div style={{ margin: '20px', cursor: "pointer" }} onClick={() => openRecipe(_id)} key={_id}>
-                            <Typography gutterBottom variant="h6">{title}</Typography>
-                            <Typography gutterBottom variant="subtitle2">{name}</Typography>
-                            <Typography gutterBottom variant="subtitle2">{description}</Typography>
-                            <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
-                            <img src={selectedFile} width="200px" /> 
+                            <Typography className={classes.section} gutterBottom variant="h6">{title}</Typography>
+                            <Typography className={classes.section} gutterBottom variant="subtitle2">{name}</Typography>
+                            <Typography className={classes.section} gutterBottom variant="subtitle2">{description}</Typography>
+                            <Typography className={classes.section} gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
+                            <img className={classes.recommendedImage} src={selectedFile} width="200px" alt={title} /> 
                         </div>
                     ))}
                 </div>

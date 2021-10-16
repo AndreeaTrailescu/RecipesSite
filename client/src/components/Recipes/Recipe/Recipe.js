@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useStyles from './styles';
 import { Card, CardActions, CardContent, CardMedia, Button , Typography, ButtonBase } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -14,14 +14,25 @@ const Recipe = ({ recipe, setCurrentId }) => {
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const history = useHistory();
+    const [likes, setLikes] = useState(recipe?.likes);
+    const hasLikedRecipe = likes.find((like) => like === (user?.result?.googleId || user?.result?._id));
+
+    const handleLike = async () => {
+        dispatch(likeRecipe(recipe._id));
+        if(hasLikedRecipe) {
+            setLikes(recipe.likes.filter((id) => id !== (user?.result.googleId || user?.result?._id)));
+        } else {
+            setLikes([...recipe.likes, (user?.result.googleId || user?.result?._id) ]);
+        }
+    };
 
     const Likes = () => {
-        if(recipe.likes.length > 0) {
-            return recipe.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        if(likes.length > 0) {
+            return likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
             ? (
-                <><FavoriteIcon fontSize="small" />&nbsp;{recipe.likes.length > 2 ? `You and ${recipe.likes.length - 1} others` : `${recipe.likes.length} like${recipe.likes.length > 1 ? 's' : ''} `}</>
+                <><FavoriteIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''} `}</>
             ) : (
-                <><FavoriteIcon fontSize="small" />&nbsp;{recipe.likes.length} {recipe.likes.length === 1 ? 'Like' : 'Likes'}</>
+                <><FavoriteIcon fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
             );
         }
 
@@ -58,7 +69,7 @@ const Recipe = ({ recipe, setCurrentId }) => {
             </ButtonBase>
             <CardActions className={classes.cardActions}>
                 <Button size="small" style={{ color: '#ff0066' }} disabled={!user?.result}
-                onClick={() => dispatch(likeRecipe(recipe._id))}>
+                onClick={handleLike}>
                     <Likes />
                 </Button>
                 {(user?.result?.googleId === recipe?.creator || user?.result?._id === recipe?.creator) && (

@@ -11,6 +11,7 @@ const recipeSchema = mongoose.Schema({
         type:[String],
         default: [],
     },
+    comments: { type: [String], default: [], },
     dateWascreatedAt: {
         type: Date,
         default: new Date()
